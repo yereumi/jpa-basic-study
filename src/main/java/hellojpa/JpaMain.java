@@ -16,15 +16,24 @@ public class JpaMain {
         tx.begin();
 
         try {
-            // 비영속
-            Member member = new Member();
-            member.setId(101L);
-            member.setName("HelloJPA");
+//            Member findMember1 = em.find(Member.class, 101L); // DB에서 조회
+//            Member findMember2 = em.find(Member.class, 101L); // 1차 캐시에서 조회
+//
+//            Member member1 = new Member(150L, "A");
+//            Member member2 = new Member(160L, "B");
+//
+//            em.persist(member1);
+//            em.persist(member2);
 
-            // 영속 -> DB에 저장되지 않음
-            System.out.println("=== BEFORE ===");
-            em.persist(member); // 1차 캐시에 저장
-            System.out.println("=== AFTER ===");
+            Member member = em.find(Member.class, 150L);
+            member.setName("ZZZZZ"); // 변경 감지(Dirty Checking)
+            // 변경 감지 원리
+            // 1. flush()
+            // 2. 1차 캐시 안의 엔티티와 스냅샷 비교
+            //  스냅샷: 값을 조회한 시점의 상태
+            // 3. 변경된 값이 있으면 UPDATE SQL 생성
+            // 4. flush
+            // 5. commit
 
             tx.commit();
         } catch (Exception e) {
