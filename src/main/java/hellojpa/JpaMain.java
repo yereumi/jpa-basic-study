@@ -14,10 +14,14 @@ public class JpaMain {
         tx.begin();
 
         try {
-            Member member = new Member(201L, "member201");
-            em.persist(member);
-            em.flush();
+            Member member = em.find(Member.class, 200L);
+            member.setName("AAAAA");
 
+            em.clear();
+
+            Member member2 = em.find(Member.class, 200L); // 쿼리가 두 번 나감
+
+            System.out.println("====================");
             tx.commit();
         } catch (Exception e) {
             tx.rollback();
