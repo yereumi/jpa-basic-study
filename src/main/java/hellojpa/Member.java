@@ -1,9 +1,11 @@
-package jpabook.jpashop.domain;
+package hellojpa;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 
 @Entity
 public class Member {
@@ -12,13 +14,12 @@ public class Member {
     @Column(name = "member_id")
     private Long id;
 
+    @Column(name = "username")
     private String name;
 
-    private String city;
-
-    private String street;
-
-    private String zipcode;
+    @ManyToOne
+    @JoinColumn(name = "team_id")
+    private Team team;
 
     public Long getId() {
         return id;
@@ -36,27 +37,11 @@ public class Member {
         this.name = name;
     }
 
-    public String getCity() {
-        return city;
+    public Team getTeam() {
+        return team;
     }
 
-    public void setCity(String city) {
-        this.city = city;
-    }
-
-    public String getStreet() {
-        return street;
-    }
-
-    public void setStreet(String street) {
-        this.street = street;
-    }
-
-    public String getZipcode() {
-        return zipcode;
-    }
-
-    public void setZipcode(String zipcode) {
-        this.zipcode = zipcode;
+    public void setTeam(Team team) {
+        this.team = team;
     }
 }
